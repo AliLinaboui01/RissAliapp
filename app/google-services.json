@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "675908658886",
+    "project_id": "ud15296",
+    "storage_bucket": "ud15296.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675908658886:android:c519c8213bb545ca9119c7",
+        "android_client_info": {
+          "package_name": "ali.org.rissali"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQDwArFnBd8Gfd-YgDCDylDEK0X7Nzjvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
