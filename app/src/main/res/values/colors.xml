@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#09051C</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="stroke">#C7C6C6</color>
     <color name="main">#ED875C</color>
+    <color name="hint">#3B3B3B</color>
+    <color name="hintMain">#DA6317</color>
+    <color name="grey">#F5F5F5</color>
 </resources>

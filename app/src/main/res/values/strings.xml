@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">RissAli</string>
+    <string name="or_continue_with">Or Continue With</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login_to_your_account">Login To Your Account</string>
+    <string name="forgetPassText"><u>Forgot Your Password?</u></string>
+    <string name="sing_up"> <u>Sing Up</u></string>
+    <string name="you_arn_t_a_user">You aren\'t a user? </string>
+    <string name="already_have_an_account"><u>already have an account?</u></string>
+    <string name="login1"> <u>Login</u></string>
+    <string name="sing_up_for_free">Sing Up For Free</string>
+    <string name="username">UserName</string>
+    <string name="keep_me_signed_in">Keep Me Signed In</string>
+    <string name="email_me_about_special_pricing">Email Me About Special Pricing</string>
+    <string name="sing_up1">Sing Up</string>
+    <string name="what_do_want_to_order">what do want to order?</string>
+    <string name="todo">TODO</string>
+    <string name="ali_linaboui">ali Linaboui</string>
+    <string name="welcome">Welcome</string>
 </resources>
