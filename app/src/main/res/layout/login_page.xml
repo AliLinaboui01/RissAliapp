@@ -26,16 +26,18 @@
             android:padding="16dp">
 
             <!-- Logo -->
+
+            <!-- Title -->
+
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="407dp"
                 android:layout_height="249dp"
                 android:layout_gravity="center"
-                android:background="@drawable/jrid"
-                android:src="@drawable/logo"
+                android:background="@drawable/back"
+                android:src="@drawable/mylogo"
                 tools:ignore="ContentDescription" />
 
-            <!-- Title -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

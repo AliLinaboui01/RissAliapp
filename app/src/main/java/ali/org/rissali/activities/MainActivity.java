@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import ali.org.rissali.R;
 
 public class MainActivity extends BaseActivity {
-
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class MainActivity extends BaseActivity {
         });
 
         Button loginButton = findViewById(R.id.loginButton);
+        progressBar = findViewById(R.id.progressBar2);
+        progressBar.setVisibility(ProgressBar.GONE);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +48,7 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        Button singUpButton = findViewById(R.id.singUpButton);
+        Button singUpButton = findViewById(R.id.signUpButton);
         singUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,5 +56,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 }
