@@ -23,4 +23,5 @@
     <string name="welcome">Welcome</string>
     <string name="today_s_best_dates">Today\'s Best Food</string>
     <string name="choose_category">Choose Category</string>
+    <string name="title">Title</string>
 </resources>
