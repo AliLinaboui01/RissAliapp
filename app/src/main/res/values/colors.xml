@@ -7,4 +7,13 @@
     <color name="hint">#3B3B3B</color>
     <color name="hintMain">#DA6317</color>
     <color name="grey">#F5F5F5</color>
+    <color name="blue_gery">#9e9e9e</color>
+    <color name="cat_1">#A38FEC</color>
+    <color name="cat_2">#7BC3D5</color>
+    <color name="cat_3">#FC9D8B</color>
+    <color name="cat_4">#5DCC92</color>
+    <color name="cat_5">#EE71A8</color>
+    <color name="cat_6">#92CEA4</color>
+    <color name="cat_7">#DE70E0</color>
+    <color name="cat_8">#9EAADD</color>
 </resources>

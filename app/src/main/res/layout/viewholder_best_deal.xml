@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="260dp"
-    android:layout_height="295dp"
+    android:layout_height="285dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     app:cardCornerRadius="15dp"
@@ -64,7 +64,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/starTxt"
                 app:layout_constraintStart_toEndOf="@+id/starTxt"
                 tools:ignore="MissingConstraints"
-                tools:src="@drawable/star" />
+                android:src="@drawable/star" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -90,14 +90,15 @@
 
             <ImageView
                 android:id="@+id/imageTmeTxt"
-                android:layout_width="20dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/ic_time"
                 app:layout_constraintBottom_toBottomOf="@+id/timetxt"
                 app:layout_constraintStart_toEndOf="@+id/timetxt"
                 app:layout_constraintTop_toTopOf="@+id/timetxt"
-                tools:ignore="MissingConstraints"
-                tools:src="@drawable/ic_time" />
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/priceTxt"

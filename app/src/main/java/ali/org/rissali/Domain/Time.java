@@ -2,14 +2,15 @@ package ali.org.rissali.Domain;
 
 public class Time {
     private int Id;
-    private String Loc;
+    private String Value;
 
     public Time() {
     }
 
+
     @Override
     public String toString() {
-        return  Loc;
+        return  Value;
     }
 
     public int getId() {
@@ -20,11 +21,11 @@ public class Time {
         Id = id;
     }
 
-    public String getLoc() {
-        return Loc;
+    public String getValue() {
+        return Value;
     }
 
-    public void setLoc(String loc) {
-        Loc = loc;
+    public void setValue(String value) {
+        Value = value;
     }
 }
