@@ -25,6 +25,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.main));
 
         Button loginBtn = findViewById(R.id.loginBtn);
         TextView signUpBtn = findViewById(R.id.singUpBtn);

@@ -34,6 +34,7 @@
                 android:layout_width="407dp"
                 android:layout_height="249dp"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
                 android:background="@drawable/back"
                 android:src="@drawable/mylogo"
                 tools:ignore="ContentDescription" />

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    >
 
     <!-- Logo ImageView -->
     <ImageView
@@ -13,6 +13,7 @@
         android:layout_width="388dp"
         android:layout_height="648dp"
         android:layout_marginTop="40dp"
+        android:scaleType="centerCrop"
         android:background="@drawable/back"
         android:src="@drawable/mylogo"
         app:layout_constraintTop_toTopOf="parent"

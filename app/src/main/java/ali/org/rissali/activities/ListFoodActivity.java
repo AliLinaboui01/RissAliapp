@@ -26,9 +26,11 @@ import java.util.ArrayList;
 import ali.org.rissali.Domain.Foods;
 import ali.org.rissali.R;
 import ali.org.rissali.adapter.FoodListAdapter;
+import ali.org.rissali.databinding.ActivityListFoodBinding;
 
 public class ListFoodActivity extends BaseActivity {
 
+    private ActivityListFoodBinding binding;
 
     private RecyclerView.Adapter adapterListFood;
     private int categoryId;
@@ -38,22 +40,19 @@ public class ListFoodActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_list_food);
+        binding = ActivityListFoodBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        getWindow().setStatusBarColor(getResources().getColor(R.color.main));
 
         getIntentExtra();
-        ProgressBar progressBar = findViewById(R.id.progressBarListFood);
-        RecyclerView foodListView = findViewById(R.id.foodListView);
-        TextView title = findViewById(R.id.titleTxListFood);
-        ImageView img = findViewById(R.id.backBtn);
-        initList(progressBar, foodListView , title, img);
+        initList();
     }
 
-    private void initList(ProgressBar progressBar, RecyclerView foodListView, TextView title, ImageView back) {
+    private void initList() {
         DatabaseReference myRef = database.getReference("Foods");
-        progressBar.setVisibility(View.VISIBLE);
-        title.setText(categoryName);
-        back.setOnClickListener( v -> finish());
+        binding.progressBarListFood.setVisibility(View.VISIBLE);
+        binding.titleTxListFood.setText(categoryName);
+        binding.backBtn.setOnClickListener( v -> finish());
         ArrayList<Foods> list = new ArrayList<>();
         Query query;
         if(isSearch){
@@ -70,11 +69,11 @@ public class ListFoodActivity extends BaseActivity {
                     }
                 }
                 if(!list.isEmpty()){
-                    foodListView.setLayoutManager(new GridLayoutManager(ListFoodActivity.this, 2));
+                    binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodActivity.this, 2));
                     adapterListFood = new FoodListAdapter(list);
-                    foodListView.setAdapter(adapterListFood);
+                    binding.foodListView.setAdapter(adapterListFood);
                 }
-                progressBar.setVisibility(View.GONE);
+                binding.progressBarListFood.setVisibility(View.GONE);
             }
 
             @Override

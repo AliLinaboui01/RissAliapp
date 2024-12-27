@@ -40,13 +40,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
 
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.viewholder holder, int position) {
-        holder.titleTxt.setText(items.get(position).getTitle());
-        holder.priceTxt.setText("$" +items.get(position).getPrice());
-        holder.timeTxt.setText(items.get(position).getTimeValue()+ " min");
-        holder.starTxt.setText(""+ items.get(position).getStar());
+        int adapterPosition = holder.getAdapterPosition();
+        holder.titleTxt.setText(items.get(adapterPosition).getTitle());
+        holder.priceTxt.setText("$" +items.get(adapterPosition).getPrice());
+        holder.timeTxt.setText(items.get(adapterPosition).getTimeValue()+ " min");
+        holder.starTxt.setText(""+ items.get(adapterPosition).getStar());
 
         Glide.with(context)
-                .load(items.get(position).getImagePath())
+                .load(items.get(adapterPosition).getImagePath())
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
@@ -54,7 +55,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("object", items.get(position));
+                intent.putExtra("object", items.get(adapterPosition));
                 context.startActivity(intent);
             }
         });

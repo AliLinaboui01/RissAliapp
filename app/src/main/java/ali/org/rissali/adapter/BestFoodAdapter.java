@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.ArrayList;
 
+import ali.org.rissali.Domain.Category;
 import ali.org.rissali.Domain.Foods;
 import ali.org.rissali.R;
 import ali.org.rissali.activities.DetailActivity;
@@ -40,22 +41,21 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
 
     @Override
     public void onBindViewHolder(@NonNull BestFoodAdapter.viewholder holder, int position) {
-        holder.titleTxt.setText(items.get(position).getTitle());
-        holder.priceTxt.setText("$" +items.get(position).getPrice());
-        holder.timeTxt.setText(items.get(position).getTimeValue()+ " min");
-        holder.starTxt.setText(""+ items.get(position).getStar());
+        Foods food = items.get(holder.getAdapterPosition());
+        int adapterPosition = holder.getAdapterPosition();
+        holder.titleTxt.setText(food.getTitle());
+        holder.priceTxt.setText("$" +food.getPrice());
+        holder.timeTxt.setText(food.getTimeValue()+ " min");
+        holder.starTxt.setText(""+ food.getStar());
 
         Glide.with(context)
-                .load(items.get(position).getImagePath())
+                .load(food.getImagePath())
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("object", items.get(position));
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("object", items.get(adapterPosition));
+            context.startActivity(intent);
         });
     }
 

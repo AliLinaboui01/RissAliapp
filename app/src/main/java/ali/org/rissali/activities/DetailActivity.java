@@ -16,42 +16,58 @@ import com.bumptech.glide.Glide;
 
 import ali.org.rissali.Domain.Foods;
 import ali.org.rissali.R;
+import ali.org.rissali.databinding.ActivityDetailBinding;
+import ali.org.rissali.helpers.ManagementCart;
 
 public class DetailActivity extends BaseActivity {
 
+    private ActivityDetailBinding binding;
     private Foods object;
+    private int num = 1;
+    private ManagementCart managementCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_detail);
-        ImageView backBtn = findViewById(R.id.backDetBtn);
-        TextView titleTxt = findViewById(R.id.titleTxtDet);
-        TextView ratting = findViewById(R.id.rateTxt);
-        ImageView picDet = findViewById(R.id.picDet);
-        RatingBar ratingBar = findViewById(R.id.ratingBar);
-        TextView price = findViewById(R.id.priceTxtDet);
-        TextView timeTxt = findViewById(R.id.timeDetTxt);
-        TextView quantity = findViewById(R.id.numTxt);
-        TextView total = findViewById(R.id.totalTxt);
-        TextView description = findViewById(R.id.description);
+        binding = ActivityDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        getWindow().setStatusBarColor(getResources().getColor(R.color.main));
+
         getIntentExtra();
-        setVariable(backBtn, titleTxt, ratting, price, ratingBar,timeTxt, picDet, description);
+        setVariable();
 
     }
 
-    private void setVariable(ImageView backBtn, TextView titleTxt, TextView ratting,TextView price, RatingBar ratingBar, TextView time, ImageView picDet, TextView description) {
-        backBtn.setOnClickListener(v -> finish());
+    private void setVariable() {
+        managementCart = new ManagementCart(this);
+        binding.backDetBtn.setOnClickListener(v -> finish());
         Glide.with(DetailActivity.this)
                 .load(object.getImagePath())
-                .into(picDet);
-        titleTxt.setText(object.getTitle());
-        price.setText("$"+object.getPrice());
-        time.setText(object.getTimeValue()+" min");
-        description.setText(object.getDescription());
-        ratting.setText(object.getStar() + "Rating");
-        ratingBar.setRating((float)object.getStar());
+                .into(binding.picDet);
+        binding.titleTxtDet.setText(object.getTitle());
+        binding.priceTxtDet.setText("$"+object.getPrice());
+        binding.timeDetTxt.setText(object.getTimeValue()+" min");
+        binding.description.setText(object.getDescription());
+        binding.rateTxt.setText(object.getStar() + "Rating");
+        binding.ratingBar.setRating((float)object.getStar());
+
+        binding.plusBtn.setOnClickListener(v -> {
+            num++;
+            binding.numTxt.setText(num+ " ");
+            binding.totalTxt.setText("$" +num * object.getPrice());
+        });
+        binding.minusBtn.setOnClickListener(v -> {
+            if(num > 1){
+                num--;
+                binding.numTxt.setText(num+ " ");
+                binding.totalTxt.setText("$" +num * object.getPrice());
+            }
+
+        });
+        binding.addBtn.setOnClickListener(v -> {
+            object.setNumberInCart(num);
+            managementCart.insertFood(object);
+        });
 
     }
 

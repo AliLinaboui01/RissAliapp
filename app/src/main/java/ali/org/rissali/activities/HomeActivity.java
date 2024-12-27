@@ -35,81 +35,64 @@ import ali.org.rissali.Domain.User;
 import ali.org.rissali.R;
 import ali.org.rissali.adapter.BestFoodAdapter;
 import ali.org.rissali.adapter.CategoryAdapter;
+import ali.org.rissali.databinding.HomePageBinding;
 
 public class HomeActivity extends BaseActivity{
 
+    private HomePageBinding binding;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_page);
-        TextView usernameTxt = findViewById(R.id.usernameTxt);
-        setUsername(usernameTxt);
-        ImageView logoutBtn = findViewById(R.id.logoutBtn);
-        ProgressBar progressBar = findViewById(R.id.progressBarBestDates);
-        ProgressBar categoryProgressBar = findViewById(R.id.categoryProgressBar);
+        binding = HomePageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        getWindow().setStatusBarColor(getResources().getColor(R.color.main));
+        setUsername();
 
-        RecyclerView bestDatesView = findViewById(R.id.bestDatesView);
-        RecyclerView categoryView = findViewById(R.id.seasonView);
-
-        ImageView searchBtn = findViewById(R.id.searchBtn);
-        EditText searchText = findViewById(R.id.searchEditText);
-
-        logout(logoutBtn);
+        logout();
         initLocation();
-        initUsername(usernameTxt);
+        initUsername();
         initTime();
         initPrice();
-        initBestFood(progressBar, bestDatesView);
-        initCategory(categoryProgressBar, categoryView);
-        setVariable(searchBtn, searchText);
+        initBestFood();
+        initCategory();
+        setVariable();
+
+        binding.cartBtn.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, CartActivity.class)));
     }
 
-    private void setVariable(ImageView searchBtn, EditText searchText) {
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = searchText.getText().toString();
-                if(!text.isEmpty()){
-                    Intent intent = new Intent(HomeActivity.this, ListFoodActivity.class);
-                    intent.putExtra("text" ,text);
-                    intent.putExtra("isSearch", true);
-                    startActivity(intent);
-                }
+    private void setVariable() {
+        binding.searchBtn.setOnClickListener(v -> {
+            String text = binding.searchEditText.getText().toString();
+            if(!text.isEmpty()){
+                Intent intent = new Intent(HomeActivity.this, ListFoodActivity.class);
+                intent.putExtra("text" ,text);
+                intent.putExtra("isSearch", true);
+                startActivity(intent);
             }
         });
     }
 
-    private void initUsername(TextView usernameTxt) {
+    private void initUsername() {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
-            String userId = user.getUid();
-            DatabaseReference userRef = database.getReference("Users").child(userId);
+            // Get user details from the FirebaseUser object
+            String displayName = user.getDisplayName(); // This might be null if not set during registration
+            String email = user.getEmail(); // Email is usually available
 
-            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        // Get the user object
-                        User currentUser = snapshot.getValue(User.class);
-                        if (currentUser != null) {
-                            // Set the username in the TextView
-                            usernameTxt.setText(currentUser.getUsername());
-                        }
-                    }
-                }
+            // Display the email or a placeholder if displayName is null
+            String usernameToShow = displayName != null ? displayName : email;
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e(TAG, "Error retrieving user data: " + error.getMessage());
-                }
-            });
+            binding.usernameTxt.setText(usernameToShow);
+        } else {
+            Log.e(TAG, "No authenticated user found.");
         }
     }
 
-    private void initCategory(ProgressBar categoryProgressBar, RecyclerView categoryView) {
+
+    private void initCategory() {
         DatabaseReference myRef = database.getReference("Category");
-        categoryProgressBar.setVisibility(View.VISIBLE);
+        binding.categoryProgressBar.setVisibility(View.VISIBLE);
         ArrayList<Category> list = new ArrayList<>();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -127,55 +110,69 @@ public class HomeActivity extends BaseActivity{
                     }
                     if (!list.isEmpty()) {
                         Log.d("CategoryDebug", "Setting up RecyclerView with " + list.size() + " categories");
-                        categoryView.setLayoutManager(new GridLayoutManager(HomeActivity.this, 4));
+                        binding.seasonView.setLayoutManager(new GridLayoutManager(HomeActivity.this, 4));
                         CategoryAdapter adapter = new CategoryAdapter(list);
-                        categoryView.setAdapter(adapter);
+                        binding.seasonView.setAdapter(adapter);
                     } else {
                         Log.e("CategoryDebug", "No categories found in database");
                     }
                 } else {
                     Log.e("CategoryDebug", "Category snapshot doesn't exist");
                 }
-                categoryProgressBar.setVisibility(View.GONE);
+                binding.categoryProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("CategoryDebug", "Database error: " + error.getMessage());
-                categoryProgressBar.setVisibility(View.GONE);
+                binding.categoryProgressBar.setVisibility(View.GONE);
             }
         });
     }
-    private void initBestFood(ProgressBar progressBar, RecyclerView bestDatesView) {
+    private void initBestFood() {
         DatabaseReference myRef = database.getReference("Foods");
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBarBestDates.setVisibility(View.VISIBLE);
         ArrayList<Foods> foods = new ArrayList<>();
+
         Query query = myRef.orderByChild("BestFood").equalTo(true);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for (DataSnapshot issue: snapshot.getChildren()){
-                        foods.add(issue.getValue(Foods.class));
+                if (snapshot.exists()) {
+                    for (DataSnapshot issue : snapshot.getChildren()) {
+                        Foods food = issue.getValue(Foods.class);
+                        if (food != null) {
+                            Log.d("FoodsDebug", "Food: " + food.getTitle() + ", ImagePath: " + food.getImagePath());
+                            foods.add(food);
+                        }
                     }
+
                     if (!foods.isEmpty()) {
-                        bestDatesView.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                        RecyclerView.Adapter<BestFoodAdapter.viewholder> adapter = new BestFoodAdapter(foods);
-                        bestDatesView.setAdapter(adapter);
+                        Log.d("FoodsDebug", "Setting up RecyclerView with " + foods.size() + " items");
+                        binding.bestDatesView.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                        BestFoodAdapter adapter = new BestFoodAdapter(foods);
+                        binding.bestDatesView.setAdapter(adapter);
+                        binding.bestDatesView.setVisibility(View.VISIBLE); // Ensure RecyclerView is visible
+                    } else {
+                        Log.e("FoodsDebug", "No best foods found.");
                     }
-                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Log.e("FoodsDebug", "Foods snapshot doesn't exist");
                 }
+                binding.progressBarBestDates.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("FoodsDebug", "Database error: " + error.getMessage());
+                binding.progressBarBestDates.setVisibility(View.GONE);
             }
         });
     }
 
-    public void logout(ImageView logoutBtn){
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+
+    public void logout(){
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
@@ -188,7 +185,7 @@ public class HomeActivity extends BaseActivity{
             }
         });
     }
-    private void setUsername(TextView usernameTxt){
+    private void setUsername(){
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null){
             user.getDisplayName();

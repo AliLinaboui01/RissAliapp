@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Objects;
 
@@ -27,6 +28,8 @@ public class SignUpActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sing_up_page); // Corrected layout name if needed
+        getWindow().setStatusBarColor(getResources().getColor(R.color.main));
+
         Button signUpBtn = findViewById(R.id.btnSignUp);
         TextView haveAccount = findViewById(R.id.haveAccount);
         ImageView showPassword = findViewById(R.id.showPassword);
@@ -65,38 +68,39 @@ public class SignUpActivity extends BaseActivity {
             mAuth.createUserWithEmailAndPassword(inputEmail, inputPassword)
                     .addOnCompleteListener(SignUpActivity.this, task -> {
                         if (task.isSuccessful()) {
-                            Log.i(TAG, "User registration successful");
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
                             if (firebaseUser != null) {
+                                // Set the display name
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(inputUsername) // Set the username as display name
+                                        .build();
+
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(profileTask -> {
+                                            if (profileTask.isSuccessful()) {
+                                                Log.i(TAG, "Display name updated");
+                                                Toast.makeText(SignUpActivity.this,
+                                                        "Registration successful! Please verify your email.",
+                                                        Toast.LENGTH_LONG).show();
+
+                                                // Redirect to login
+                                                redirectToLogin();
+                                            } else {
+                                                Log.e(TAG, "Failed to update display name: " + profileTask.getException().getMessage());
+                                                Toast.makeText(SignUpActivity.this,
+                                                        "Failed to update display name.",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                                 // Send email verification
                                 firebaseUser.sendEmailVerification()
                                         .addOnCompleteListener(verificationTask -> {
                                             if (verificationTask.isSuccessful()) {
                                                 Log.i(TAG, "Email verification sent");
-                                                Toast.makeText(SignUpActivity.this,
-                                                        "Registration successful! Please verify your email.",
-                                                        Toast.LENGTH_LONG).show();
-
-                                                // Save user to the database
-                                                User user = new User(inputUsername, inputEmail, inputPassword);
-                                                databaseReference.child(firebaseUser.getUid()).setValue(user)
-                                                        .addOnCompleteListener(dbTask -> {
-                                                            if (dbTask.isSuccessful()) {
-                                                                Log.i(TAG, "User saved to database");
-                                                                redirectToLogin();
-                                                            } else {
-                                                                Log.e(TAG, "Database error: " + Objects.requireNonNull(dbTask.getException()).getMessage());
-                                                                Toast.makeText(SignUpActivity.this,
-                                                                        "Failed to save user data: " + dbTask.getException().getMessage(),
-                                                                        Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        });
                                             } else {
-                                                Log.e(TAG, "Email verification failed: " + Objects.requireNonNull(verificationTask.getException()).getMessage());
-                                                Toast.makeText(SignUpActivity.this,
-                                                        "Failed to send verification email: " + verificationTask.getException().getMessage(),
-                                                        Toast.LENGTH_SHORT).show();
+                                                Log.e(TAG, "Email verification failed: " + verificationTask.getException().getMessage());
                                             }
                                         });
                             }
@@ -107,6 +111,7 @@ public class SignUpActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
+
         });
     }
 

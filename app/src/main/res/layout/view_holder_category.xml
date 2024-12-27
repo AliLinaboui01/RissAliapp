@@ -16,12 +16,12 @@
 
         <ImageView
             android:id="@+id/imageCat"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:padding="12dp"
+            android:layout_width="70dp"
+            android:layout_height="76dp"
             android:background="@drawable/cat_1_background"
-            android:src="@drawable/btn_1"
-            android:scaleType="fitCenter" />
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btn_1" />
 
         <TextView
             android:id="@+id/catNameTxt"
