@@ -1,16 +1,6 @@
 package ali.org.rissali.activities;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 
@@ -52,13 +42,13 @@ public class DetailActivity extends BaseActivity {
         binding.ratingBar.setRating((float)object.getStar());
 
         binding.plusBtn.setOnClickListener(v -> {
-            num++;
+            num = num+1;
             binding.numTxt.setText(num+ " ");
             binding.totalTxt.setText("$" +num * object.getPrice());
         });
         binding.minusBtn.setOnClickListener(v -> {
             if(num > 1){
-                num--;
+                num = num -1;
                 binding.numTxt.setText(num+ " ");
                 binding.totalTxt.setText("$" +num * object.getPrice());
             }

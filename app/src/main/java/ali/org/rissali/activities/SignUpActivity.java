@@ -6,49 +6,36 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
 import java.util.Objects;
-
-import ali.org.rissali.Domain.User;
 import ali.org.rissali.R;
+import ali.org.rissali.databinding.SingUpPageBinding;
 
 public class SignUpActivity extends BaseActivity {
 
+    private SingUpPageBinding binding;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sing_up_page); // Corrected layout name if needed
+        binding = SingUpPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         getWindow().setStatusBarColor(getResources().getColor(R.color.main));
 
-        Button signUpBtn = findViewById(R.id.btnSignUp);
-        TextView haveAccount = findViewById(R.id.haveAccount);
-        ImageView showPassword = findViewById(R.id.showPassword);
-        EditText passwordField = findViewById(R.id.inputPassword);
 
-        signUp(signUpBtn);
-        setupLoginRedirect(haveAccount);
-        setupPasswordVisibilityToggle(showPassword, passwordField);
+        signUp();
+        setupLoginRedirect();
+        setupPasswordVisibilityToggle();
     }
 
-    private void signUp(Button signUpBtn) {
-        signUpBtn.setOnClickListener(v -> {
-            EditText usernameEditText = findViewById(R.id.inputUsername);
-            EditText emailEditText = findViewById(R.id.inputEmail);
-            EditText passwordEditText = findViewById(R.id.inputPassword);
+    private void signUp() {
+        binding.btnSignUp.setOnClickListener(v -> {
 
-            String inputUsername = usernameEditText.getText().toString().trim();
-            String inputEmail = emailEditText.getText().toString().trim();
-            String inputPassword = passwordEditText.getText().toString().trim();
+            String inputUsername = binding.inputUsername.getText().toString().trim();
+            String inputEmail = binding.inputEmail.getText().toString().trim();
+            String inputPassword = binding.inputPassword.getText().toString().trim();
 
             if (inputUsername.isEmpty()) {
                 Toast.makeText(SignUpActivity.this, "Username is required.", Toast.LENGTH_SHORT).show();
@@ -121,28 +108,28 @@ public class SignUpActivity extends BaseActivity {
         return inputEmail.matches(emailPattern);
     }
 
-    private void setupLoginRedirect(TextView haveAccount) {
-        haveAccount.setOnClickListener(v -> {
+    private void setupLoginRedirect() {
+        binding.haveAccount.setOnClickListener(v -> {
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
         });
     }
 
-    private void setupPasswordVisibilityToggle(ImageView showPassword, EditText passwordField) {
-        showPassword.setOnClickListener(new View.OnClickListener() {
+    private void setupPasswordVisibilityToggle() {
+        binding.showPassword.setOnClickListener(new View.OnClickListener() {
             boolean isPasswordVisible = false;
 
             @Override
             public void onClick(View v) {
                 if (isPasswordVisible) {
-                    passwordField.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    showPassword.setImageResource(R.drawable.ic_eye_off);
+                    binding.inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    binding.showPassword.setImageResource(R.drawable.ic_eye_off);
                 } else {
-                    passwordField.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    showPassword.setImageResource(R.drawable.ic_eye_on);
+                    binding.inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    binding.showPassword.setImageResource(R.drawable.ic_eye_on);
                 }
                 isPasswordVisible = !isPasswordVisible;
-                passwordField.setSelection(passwordField.getText().length());
+                binding.inputPassword.setSelection(binding.inputPassword.getText().length());
             }
         });
     }

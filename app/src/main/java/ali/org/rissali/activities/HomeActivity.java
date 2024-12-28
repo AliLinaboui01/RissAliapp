@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +26,6 @@ import ali.org.rissali.Domain.Foods;
 import ali.org.rissali.Domain.Location;
 import ali.org.rissali.Domain.Price;
 import ali.org.rissali.Domain.Time;
-import ali.org.rissali.Domain.User;
 import ali.org.rissali.R;
 import ali.org.rissali.adapter.BestFoodAdapter;
 import ali.org.rissali.adapter.CategoryAdapter;

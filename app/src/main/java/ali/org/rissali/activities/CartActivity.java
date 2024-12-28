@@ -3,19 +3,13 @@ package ali.org.rissali.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ali.org.rissali.R;
 import ali.org.rissali.adapter.CartAdapter;
 import ali.org.rissali.databinding.ActivityCartBinding;
-import ali.org.rissali.databinding.ActivityDetailBinding;
-import ali.org.rissali.helpers.ChangeNumberItemsListener;
+
 import ali.org.rissali.helpers.ManagementCart;
 
 public class CartActivity extends BaseActivity {
@@ -34,12 +28,7 @@ public class CartActivity extends BaseActivity {
         setVariable();
         calculateCart();
         initList();
-        binding.backBtnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.backBtnCart.setOnClickListener(v -> finish());
     }
 
     private void initList() {
