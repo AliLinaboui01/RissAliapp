@@ -15,12 +15,12 @@ Allow users to save favorite food items for quick access during future orders.
 ## Use Cases
 ![image](https://github.com/user-attachments/assets/e2c6c328-c373-4840-a36b-c1ec78674abf)
 ## User Interface
-### landig page
-![WhatsApp Image 2024-12-27 at 22 14 16_bacea805](https://github.com/user-attachments/assets/886132fb-e71f-4fc5-877e-8b47b0747faf)
-### login Page 
-![WhatsApp Image 2024-12-27 at 22 14 16_b5429368](https://github.com/user-attachments/assets/1110b56e-714d-4159-96df-ad9bb0d29606)
-### Sign Up Page
-![WhatsApp Image 2024-12-27 at 22 14 16_798070e6](https://github.com/user-attachments/assets/2c93e872-fa3a-4fab-9445-d8f973c649ab)
+![image](https://github.com/user-attachments/assets/69d6a1b3-0ddc-4ee0-83c2-302236972847)
+![image](https://github.com/user-attachments/assets/f98e905b-50cb-42ad-89f1-a2e7dca54769)
+![image](https://github.com/user-attachments/assets/bc10d0b5-7b1c-4ff3-81e3-a8eb7e532a0c)
+
+
+
 
 
 
