@@ -1,4 +1,4 @@
 # RissAliapp
-RissAliapp is a mobile application designed to showcase the rich tradition and heritage of dates and traditional foods . It provides users with an interactive platform to explore, learn about, and celebrate the culinary treasures of our culture.
+## OverView
+The RISSALI application is a mobile solution dedicated to managing food orders. The primary objective of this app is to provide a simple and efficient platform enabling users to order meals from restaurants or local kitchens. Users can browse menus, add items to a cart, and complete their orders seamlessly.
 
-Whether you’re a food enthusiast, a cultural explorer, or someone seeking authentic recipes, Affod is your ultimate guide.
